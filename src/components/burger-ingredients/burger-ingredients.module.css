@@ -1,0 +1,19 @@
+.section {
+    min-width: 600px;
+    padding-top: 40px;
+}
+
+.tab {
+    display: flex;
+    margin-top: 20px;
+}
+
+.container {
+    max-height: 912px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    list-style: none;
+    margin-top: 40px;
+    padding: 0;
+}
+
