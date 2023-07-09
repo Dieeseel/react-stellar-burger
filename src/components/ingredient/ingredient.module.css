@@ -1,0 +1,18 @@
+.ingredient {
+    position: relative;
+    height: 208px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.title {
+    text-align: center;
+}
+

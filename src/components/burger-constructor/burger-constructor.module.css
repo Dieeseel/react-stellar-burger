@@ -1,0 +1,27 @@
+.section {
+    min-width: 600px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+.ingredientsContainer {
+    max-height: 464px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.order {
+    padding: 40px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 40px;
+}

@@ -1,0 +1,40 @@
+.header {
+    background-color: #1c1c21;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: auto;
+    align-items: center;
+    justify-items: center;
+    margin: 0 auto;
+    max-width: 1280px;
+    padding: 16px 0;
+}
+
+.nav {
+    display: flex;
+    justify-self: flex-start;
+}
+
+.links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 8px;
+}
+
+.link {
+    display: flex;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.profileLink {
+    composes: link;
+    padding: 16px 20px;
+    justify-self: flex-end;
+}
