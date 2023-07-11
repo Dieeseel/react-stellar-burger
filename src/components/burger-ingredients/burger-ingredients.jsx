@@ -5,7 +5,7 @@ import IngredientType from '../ingredients-type/ingredients-type'
 import {ingredientPropType} from '../../utils/prop-types'
 import PropTypes from "prop-types";
 
-function BurgerIngredients({ ingridientsData }) {
+function BurgerIngredients({ ingridientsData, openIngredientModal }) {
     const [current, setCurrent] = React.useState('one')
 
     const buns = useMemo(() => ingridientsData.filter((item) => {
@@ -28,9 +28,9 @@ function BurgerIngredients({ ingridientsData }) {
             </div>
                 
             <ul className={`custom-scroll ${styles.container}`}>
-                <IngredientType type={buns} name='Булки'/>
-                <IngredientType type={sauces} name='Соусы' />
-                <IngredientType type={main} name='Начинка' />
+                <IngredientType type={buns} name='Булки' openIngredientModal={openIngredientModal} />
+                <IngredientType type={sauces} name='Соусы' openIngredientModal={openIngredientModal}  />
+                <IngredientType type={main} name='Начинка' openIngredientModal={openIngredientModal}  />
             </ul>
         </section>
     )

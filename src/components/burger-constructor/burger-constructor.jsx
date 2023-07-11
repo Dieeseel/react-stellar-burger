@@ -5,7 +5,7 @@ import {ingredientPropType} from '../../utils/prop-types'
 import PropTypes from "prop-types";
 
 
-function BurgerConstructor({ constructorData }) {
+function BurgerConstructor({ constructorData, openOrderModal }) {
     const bun = 'bun'
     const ingridientsList = constructorData.filter((item) => {
         if (item.type != bun) {
@@ -54,7 +54,7 @@ function BurgerConstructor({ constructorData }) {
                     {totalPrice}
                     <CurrencyIcon type="primary" />
                 </p>
-                <Button htmlType="button" type="primary" size="large">
+                <Button htmlType="button" type="primary" size="large" onClick={openOrderModal}>
                     Оформить заказ
                 </Button>
             </div>
