@@ -4,9 +4,20 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientType from '../ingredients-type/ingredients-type'
 import {ingredientPropType} from '../../utils/prop-types'
 import PropTypes from "prop-types";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 
-function BurgerIngredients({ ingridientsData, openIngredientModal }) {
+function BurgerIngredients({ ingridientsData }) {
     const [current, setCurrent] = React.useState('one')
+    const [ingredientDetails, setIngredientDetails] = React.useState({isClosed: true, data: null})
+    const openIngredientModal = (ingredient) => {
+        setIngredientDetails({isClosed: false, data: ingredient})
+    }
+
+    const closeIngredientModal = () => {
+        setIngredientDetails({...ingredientDetails, isClosed: true})
+    }
+
 
     const buns = useMemo(() => ingridientsData.filter((item) => {
         return item.type === 'bun'
@@ -32,6 +43,12 @@ function BurgerIngredients({ ingridientsData, openIngredientModal }) {
                 <IngredientType type={sauces} name='Соусы' openIngredientModal={openIngredientModal}  />
                 <IngredientType type={main} name='Начинка' openIngredientModal={openIngredientModal}  />
             </ul>
+            {
+            !ingredientDetails.isClosed &&
+            <Modal closeModal={closeIngredientModal}>
+              <IngredientDetails data={ingredientDetails.data} closeModal={closeIngredientModal} />
+            </Modal>
+            }
         </section>
     )
 }

@@ -1,11 +1,16 @@
+import React from "react";
+import { orderData } from "../../utils/data";
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-constructor.module.css'
 import ConstructorItem from '../constructor-item/constructor-item'
 import {ingredientPropType} from '../../utils/prop-types'
 import PropTypes from "prop-types";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
+function BurgerConstructor({ constructorData }) {
+    const [orderDetails, setOrderDetails] = React.useState({isClosed: true, data: null})
 
-function BurgerConstructor({ constructorData, openOrderModal }) {
     const bun = 'bun'
     const ingridientsList = constructorData.filter((item) => {
         if (item.type != bun) {
@@ -16,6 +21,14 @@ function BurgerConstructor({ constructorData, openOrderModal }) {
         return previousValue + item.price
     }, 0)
     const totalPrice = ingredientsPrice + constructorData[0].price * 2
+
+    const openOrderModal = (order) => {
+        setOrderDetails({isClosed: false, data: order})
+    }
+    
+    const closeOrderModal = () => {
+    setOrderDetails({...orderDetails, isClosed: true})
+    }
 
     return (
         <section className={styles.section}>
@@ -58,6 +71,12 @@ function BurgerConstructor({ constructorData, openOrderModal }) {
                     Оформить заказ
                 </Button>
             </div>
+            {
+                !orderDetails.isClosed &&
+                <Modal closeModal={closeOrderModal}>
+                    <OrderDetails data={orderData} closeModal={closeOrderModal}  />
+                </Modal>
+            }
         </section>
     )
 }
