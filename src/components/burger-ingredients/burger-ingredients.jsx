@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientType from '../ingredients-type/ingredients-type'
@@ -6,8 +6,11 @@ import {ingredientPropType} from '../../utils/prop-types'
 import PropTypes from "prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import { IngredientsDataContext } from "../../services/dataContext";
 
-function BurgerIngredients({ ingridientsData }) {
+function BurgerIngredients() {
+    const ingridientsData = useContext(IngredientsDataContext)
+
     const [current, setCurrent] = React.useState('one')
     const [ingredientDetails, setIngredientDetails] = React.useState({isClosed: true, data: null})
     const openIngredientModal = (ingredient) => {
@@ -28,6 +31,7 @@ function BurgerIngredients({ ingridientsData }) {
     const main = useMemo(() => ingridientsData.filter((item) => {
         return item.type === 'main'
     }))
+
 
     return (
         <section className={styles.section}>
@@ -53,8 +57,5 @@ function BurgerIngredients({ ingridientsData }) {
     )
 }
 
-BurgerIngredients.propTypes = {
-    ingridientsData: PropTypes.arrayOf(ingredientPropType).isRequired
-}
 
 export default BurgerIngredients
