@@ -1,6 +1,6 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './constructor-item.module.css'
-import {ingredientPropType} from '../../utils/prop-types'
+import { ingredientPropType } from '../../utils/prop-types'
 import PropTypes from "prop-types";
 
 function ConstructorItem({ data }) {
@@ -17,7 +17,7 @@ function ConstructorItem({ data }) {
 }
 
 ConstructorItem.propTypes = {
-    data: PropTypes.object.isRequired
+    data: ingredientPropType.isRequired
 }
 
 export default ConstructorItem  
