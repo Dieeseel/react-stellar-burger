@@ -6,10 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
 function Ingredient ({ data, openIngredientModal }) {
-    const dispatch = useDispatch()
-    const { burgerConstructor } = useSelector(store => store.burger)
+    const { burgerConstructor } = useSelector(store => store.burgerConstructor)
     const counter = burgerConstructor.filter(item => item._id === data._id).length
-    const buns = burgerConstructor.find(item => {return item.type === 'bun'})
     
     const [, dragRef] = useDrag({
         type: "ingredients",

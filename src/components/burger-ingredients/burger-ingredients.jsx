@@ -5,11 +5,12 @@ import IngredientType from '../ingredients-type/ingredients-type'
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
-import { OPEN_INGREDIENT_RETAILS, CLOSE_INGREDIENT_RETAILS } from "../../services/actions/burger";
+import { OPEN_INGREDIENT_DETAILS, CLOSE_INGREDIENT_DETAILS } from "../../services/actions/burger";
 
 function BurgerIngredients() {
     const dispatch = useDispatch()
-    const {ingredients, ingredientDetails} = useSelector(store => store.burger)
+    const ingredientDetails = useSelector(store => store.ingredientDetailsModalReducer)
+    const { ingredients } = useSelector(store => store.ingredients)
     const [current, setCurrent] = React.useState('bun')
     
     const bunRef = React.useRef();
@@ -37,13 +38,13 @@ function BurgerIngredients() {
 
     const openIngredientModal = (ingredient) => {
         dispatch({
-            type: OPEN_INGREDIENT_RETAILS,
+            type: OPEN_INGREDIENT_DETAILS,
             details: ingredient
         })
     }
 
     const closeIngredientModal = () => {
-        dispatch({ type: CLOSE_INGREDIENT_RETAILS})
+        dispatch({ type: CLOSE_INGREDIENT_DETAILS })
     }
 
 

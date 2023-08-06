@@ -10,7 +10,7 @@ import { DndProvider } from 'react-dnd';
 
 function App() {
   const dispatch = useDispatch()
-  const { ingredients, ingredientsRequest, ingredientsFaile } = useSelector(store => store.burger)
+  const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.ingredients)
   
   React.useEffect(() => {
     dispatch(getIngredients())
@@ -21,7 +21,7 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       {
-        !ingredientsRequest && !ingredientsFaile && ingredients.length > 0 &&
+        !ingredientsRequest && !ingredientsFailed && ingredients.length > 0 &&
         <main className={styles.main}>
           <DndProvider backend={HTML5Backend}>
             <BurgerIngredients />

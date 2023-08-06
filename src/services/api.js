@@ -1,12 +1,12 @@
 import { urlApi } from "../utils/data";
 
-const checkReponse = (res) => {
+const checkReponses = (res) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
 export const getIngredientsRequest = async () => {
     return fetch(`${urlApi}/ingredients`)
-        .then(res => checkReponse(res))
+        .then(res => checkReponses(res))
         .catch(err => console.log(err))
 }
 
@@ -21,6 +21,6 @@ export const makeNewOrder = (data) => {
             ingredients: data
         })
     })
-        .then(res => checkReponse(res))
+        .then(res => checkReponses(res))
 }
 

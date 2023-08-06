@@ -5,14 +5,15 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOrder } from "../../services/actions/burger";
-import { CLOSE_ORDER_MODAL, REMOVE_INGREDIENT, ADD_INGREDIENT } from "../../services/actions/burger";
+import { REMOVE_INGREDIENT, ADD_INGREDIENT, CLOSE_ORDER_MODAL } from '../../services/actions/burger';
 import { useDrop } from "react-dnd";
 import uuid from 'react-uuid';
 
 
 function BurgerConstructor() {
     const dispatch = useDispatch()
-    const { burgerConstructor, totalPrice, orderNumber } = useSelector(store => store.burger)
+    const { burgerConstructor, totalPrice } = useSelector(store => store.burgerConstructor)
+    const orderNumber = useSelector(store => store.order.orderNumber)
     
     const buns = burgerConstructor.find((item) => {
         return item.type === 'bun' 
@@ -73,7 +74,7 @@ function BurgerConstructor() {
                 <div className={`custom-scroll ${styles.ingredientsContainer}`}>
                     {
                         burgerConstructor.length
-                            ? otherIngredients.map((item, index) => (<ConstructorItem data={item} key={item.uuid} index={index}/>)) 
+                            ? otherIngredients.map((item, index) => (<ConstructorItem ingredient={item} key={item.uuid} index={index}/>)) 
                                 : ( <p className={`text text_type_main-medium ${styles.text}`}>Добавьте ингрендиенты</p> )
                     }
                 </div>

@@ -7,14 +7,14 @@ import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../services/actions/burge
 import {useDrag, useDrop} from "react-dnd";
 
 
-function ConstructorItem({ data, index }) {
+function ConstructorItem({ ingredient, index }) {
     const dispatch = useDispatch()
     const ref = React.useRef(null);
     const removeItem = () => {
         dispatch({
             type: REMOVE_INGREDIENT,
-            uuid: data.uuid,
-            price: data.price
+            uuid: ingredient.uuid,
+            price: ingredient.price
         })
     }
     
@@ -52,9 +52,9 @@ function ConstructorItem({ data, index }) {
         <div className={styles.container} ref={ref}>
             <DragIcon className={styles.drag} type="primary" />
             <ConstructorElement
-                text={data.name}
-                price={data.price}
-                thumbnail={data.image}
+                text={ingredient.name}
+                price={ingredient.price}
+                thumbnail={ingredient.image}
                 handleClose={() => {removeItem()}}
             />
         </div>
@@ -62,7 +62,7 @@ function ConstructorItem({ data, index }) {
 }
 
 ConstructorItem.propTypes = {
-    data: ingredientPropType.isRequired
+    ingredient: ingredientPropType.isRequired
 }
 
 export default ConstructorItem  
