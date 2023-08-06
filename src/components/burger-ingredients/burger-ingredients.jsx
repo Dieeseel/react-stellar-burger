@@ -1,56 +1,82 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo } from "react";
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientType from '../ingredients-type/ingredients-type'
-import {ingredientPropType} from '../../utils/prop-types'
-import PropTypes from "prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { IngredientsDataContext } from "../../services/dataContext";
+import { useDispatch, useSelector } from "react-redux";
+import { OPEN_INGREDIENT_RETAILS, CLOSE_INGREDIENT_RETAILS } from "../../services/actions/burger";
 
 function BurgerIngredients() {
-    const ingridientsData = useContext(IngredientsDataContext)
+    const dispatch = useDispatch()
+    const {ingredients, ingredientDetails} = useSelector(store => store.burger)
+    const [current, setCurrent] = React.useState('bun')
+    
+    const bunRef = React.useRef();
+    const sauceRef = React.useRef();
+    const mainRef = React.useRef();
 
-    const [current, setCurrent] = React.useState('one')
-    const [ingredientDetails, setIngredientDetails] = React.useState({isClosed: true, data: null})
+    const handleChangeTab = (e) => {
+        const containerTop = e.target.getBoundingClientRect().top;
+        const bunTop = bunRef.current.getBoundingClientRect().top;
+        const sauceTop = sauceRef.current.getBoundingClientRect().top;
+        const mainTop = mainRef.current.getBoundingClientRect().top;
+
+        if (Math.abs(bunTop - containerTop) > Math.abs(sauceTop - containerTop)) {
+            if (Math.abs(sauceTop - containerTop) > Math.abs(mainTop - containerTop)) {
+                setCurrent('main')
+            }
+            else {
+                setCurrent('sauce')
+            }
+        }
+        else {
+            setCurrent('bun')
+        }
+    }
+
     const openIngredientModal = (ingredient) => {
-        setIngredientDetails({isClosed: false, data: ingredient})
+        dispatch({
+            type: OPEN_INGREDIENT_RETAILS,
+            details: ingredient
+        })
     }
 
     const closeIngredientModal = () => {
-        setIngredientDetails({...ingredientDetails, isClosed: true})
+        dispatch({ type: CLOSE_INGREDIENT_RETAILS})
     }
 
 
-    const buns = useMemo(() => ingridientsData.filter((item) => {
+    const buns = useMemo(() => ingredients.filter((item) => {
         return item.type === 'bun'
     }))
-    const sauces = useMemo(() => ingridientsData.filter((item) => {
+    const sauces = useMemo(() => ingredients.filter((item) => {
         return item.type === 'sauce'
     }))
-    const main = useMemo(() => ingridientsData.filter((item) => {
+    const main = useMemo(() => ingredients.filter((item) => {
         return item.type === 'main'
     }))
+
 
 
     return (
         <section className={styles.section}>
             <h1 className="text text_type_main-large">Соберите бургер</h1>
             <div className={styles.tab}>
-                <Tab value="one" active={current === 'one'} onClick={setCurrent}>Булки</Tab>
-                <Tab value="two" active={current === 'two'} onClick={setCurrent}>Соусы</Tab>
-                <Tab value="three" active={current === 'three'} onClick={setCurrent}>Начинка</Tab>
+                <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>Булки</Tab>
+                <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>Соусы</Tab>
+                <Tab value="main" active={current === 'main'} onClick={setCurrent}>Начинка</Tab>
             </div>
                 
-            <ul className={`custom-scroll ${styles.container}`}>
-                <IngredientType type={buns} name='Булки' openIngredientModal={openIngredientModal} />
-                <IngredientType type={sauces} name='Соусы' openIngredientModal={openIngredientModal}  />
-                <IngredientType type={main} name='Начинка' openIngredientModal={openIngredientModal}  />
+            <ul className={`custom-scroll ${styles.container}`} onScroll={handleChangeTab}>
+                <IngredientType ref={bunRef} type={buns} name='Булки' openIngredientModal={openIngredientModal} />
+                <IngredientType ref={sauceRef} type={sauces} name='Соусы' openIngredientModal={openIngredientModal}  />
+                <IngredientType ref={mainRef} type={main} name='Начинка' openIngredientModal={openIngredientModal}  />
             </ul>
             {
-            !ingredientDetails.isClosed &&
+            ingredientDetails &&
             <Modal closeModal={closeIngredientModal}>
-              <IngredientDetails data={ingredientDetails.data} closeModal={closeIngredientModal} />
+              <IngredientDetails data={ingredientDetails} closeModal={closeIngredientModal} />
             </Modal>
             }
         </section>

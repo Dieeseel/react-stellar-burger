@@ -3,6 +3,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from "prop-types";
 import { ingredientPropType } from '../../utils/prop-types';
 
+
 function IngredientDetails({data, closeModal}) {
     return (
         <div className={`pl-10 pr-10 pb-15 pt-10 ${styles.container}`}>
