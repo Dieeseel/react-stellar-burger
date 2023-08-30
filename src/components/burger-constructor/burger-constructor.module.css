@@ -9,6 +9,10 @@
 }
 
 
+.text {
+    text-align: center;
+}
+
 .ingredientsContainer {
     max-height: 464px;
     display: flex;

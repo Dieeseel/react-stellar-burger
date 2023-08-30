@@ -1,35 +1,34 @@
-import React from 'react';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './ingredient.module.css'
 import PropTypes from "prop-types";
 import { ingredientPropType } from '../../utils/prop-types';
-import { ConstructorDataContext } from '../../services/dataContext';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
 
 function Ingredient ({ data, openIngredientModal }) {
-    const { constructorData, setConstructorData } = React.useContext(ConstructorDataContext)
+    const { burgerConstructor } = useSelector(store => store.burgerConstructor)
+    const counter = burgerConstructor.filter(item => item._id === data._id).length
+    
+    const [, dragRef] = useDrag({
+        type: "ingredients",
+        item: data,
+        collect: (monitor) => ({
+            isDrag: monitor.isDragging(),
+        }),
+    });
 
-    const addIngredient = (ingredient) => {
-        if (constructorData.some(item => {return item.type === 'bun'}) && ingredient.type === 'bun') {
-            return false
-        }
-        else {
-            setConstructorData([
-                ...constructorData,
-                ingredient
-            ])
-        }
-    }
-
+    
     return (
-        <li className={styles.ingredient} onClick={() => {addIngredient(data)}}>
+        <li ref={dragRef} className={styles.ingredient} onClick={() => {openIngredientModal(data)}}>
             <img src={data.image} alt="" />
             <p className={`text text_type_digits-default mb-1 mt-1 ${styles.price}`}>
                 {data.price}
                 <CurrencyIcon type="primary" />
             </p>
             <h3 className={`text text_type_main-default mt-1 ${styles.title}`}>{data.name}</h3>
-            <Counter count={1} size="default" extraClass="m-1" />
+            {
+                counter > 0 && <Counter count={counter} size="default" extraClass="m-1" />
+            }
         </li>
     )
 }

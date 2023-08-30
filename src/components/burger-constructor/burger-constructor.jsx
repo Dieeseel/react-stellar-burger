@@ -1,104 +1,84 @@
-import React, { useContext, useEffect, useReducer } from "react";
-import { urlApi } from "../../utils/data";
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-constructor.module.css'
 import ConstructorItem from '../constructor-item/constructor-item'
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { ConstructorDataContext } from '../../services/dataContext';
-
-
-const initialTotalPrice = { value: 0 }
-
-function reducer(state, action) {
-    switch (action.type) {
-      case "add":
-        return { value: action.payload };
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
-    }
-}
+import { useDispatch, useSelector } from "react-redux";
+import { sendOrder } from "../../services/actions/burger";
+import { REMOVE_INGREDIENT, ADD_INGREDIENT, CLOSE_ORDER_MODAL } from '../../services/actions/burger';
+import { useDrop } from "react-dnd";
+import uuid from 'react-uuid';
 
 
 function BurgerConstructor() {
-    const {constructorData} = useContext(ConstructorDataContext)
-    const [orderDetails, setOrderDetails] = React.useState({isClosed: true, data: null})
-    const [totalPrice, dispatchTotalPrice] = useReducer(reducer, initialTotalPrice, undefined);
-
-    const buns = constructorData.find((item) => {
+    const dispatch = useDispatch()
+    const { burgerConstructor, totalPrice } = useSelector(store => store.burgerConstructor)
+    const orderNumber = useSelector(store => store.order.orderNumber)
+    
+    const buns = burgerConstructor.find((item) => {
         return item.type === 'bun' 
     })
-    const otherIngredients = constructorData.filter((item) => {
-        return item.type != 'bun'
-    })
+    const otherIngredients = burgerConstructor.filter(item => item.type != 'bun')
 
-    const makeNewOrder = (data) => {
-        return fetch(`${urlApi}/orders`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                ingredients: data
+
+    const addIngredient = (ingredient) => {
+        if (buns && ingredient.type === 'bun' && buns.uuid != ingredient.uuid) {
+            dispatch({
+                type: REMOVE_INGREDIENT,
+                uuid: buns.uuid,
+                price: buns.price
             })
+        }
+        dispatch({
+            type: ADD_INGREDIENT,
+            price: ingredient.price,
+            ingredient: {...ingredient, uuid: uuid()}
         })
-          .then(res => res.ok ? res.json() : res.json().then((err) => Promise.reject(err)))
     }
-    
-    useEffect(() => {
-        constructorData.forEach(item => {
-            if (item.type === 'bun') {
-                dispatchTotalPrice({
-                    type: 'add',
-                    payload: totalPrice.value + item.price * 2
-                })
-            } 
-            else {
-                dispatchTotalPrice({
-                    type: 'add',
-                    payload: totalPrice.value + item.price
-                })
-            }
-        });
-    }, [constructorData])
+
+    const [, dropTarget] = useDrop({
+        accept: "ingredients",
+        drop: (data) => {
+            addIngredient(data);
+        },
+        collect: (monitor) => ({
+            isDrop: monitor.isOver(),
+        }),
+    });
+
 
     const openOrderModal = () => {
-        makeNewOrder(constructorData.map((item) => {
+        dispatch(sendOrder(burgerConstructor.map((item) => {
             return item._id
-        }))
-        .then((res )=> {
-            setOrderDetails({isClosed: false, data: res.order.number})
-        })
+        })))
     }
 
     const closeOrderModal = () => {
-        setOrderDetails({...orderDetails, isClosed: true})
+        dispatch({ type: CLOSE_ORDER_MODAL})
     }
-
 
     return (
         <section className={styles.section}>
-            <div className={`pt-25 ${styles.container}`}>
-                <div className='pl-8'>
-                    {   
-                        buns != undefined &&
+            <div ref={dropTarget} className={`mt-25 ${styles.container}`}>
+                <div className='pl-9'>
+                    {   buns != undefined &&
                         <ConstructorElement
                             type="top"
                             isLocked
                             text={buns.name}
                             price={buns.price}
-                            thumbnail={buns.image}
+                            thumbnail={buns.image }          
                         />
                     }
                 </div>
                 <div className={`custom-scroll ${styles.ingredientsContainer}`}>
                     {
-                        otherIngredients.map((item) => {
-                            return <ConstructorItem data={item} key={item._id} />  
-                        }) 
+                        burgerConstructor.length
+                            ? otherIngredients.map((item, index) => (<ConstructorItem ingredient={item} key={item.uuid} index={index}/>)) 
+                                : ( <p className={`text text_type_main-medium ${styles.text}`}>Добавьте ингрендиенты</p> )
                     }
                 </div>
-                <div className='pl-8'>
+                <div className='pl-9'>
                     {   
                         buns != undefined &&
                         <ConstructorElement
@@ -106,7 +86,7 @@ function BurgerConstructor() {
                             isLocked
                             text={buns.name}
                             price={buns.price}
-                            thumbnail={buns.image}
+                            thumbnail={buns.image }          
                         />
                     }
                 </div>
@@ -114,7 +94,7 @@ function BurgerConstructor() {
             
             <div className={styles.order}>
                 <p className='text text_type_digits-medium'>
-                    {totalPrice.value}
+                    {totalPrice}
                     <CurrencyIcon type="primary" />
                 </p>
                 <Button htmlType="button" type="primary" size="large" onClick={openOrderModal}>
@@ -122,9 +102,9 @@ function BurgerConstructor() {
                 </Button>
             </div>
             {
-                !orderDetails.isClosed &&
+                orderNumber > 0 &&
                 <Modal closeModal={closeOrderModal}>
-                    <OrderDetails orderNumber={orderDetails.data} closeModal={closeOrderModal}  />
+                    <OrderDetails orderNumber={orderNumber} closeModal={closeOrderModal} />
                 </Modal>
             }
         </section>
