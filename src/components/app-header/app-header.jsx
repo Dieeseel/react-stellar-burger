@@ -1,5 +1,6 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './app-header.module.css'
+import { NavLink } from 'react-router-dom'
 
 function AppHeader() {
     return (
@@ -8,26 +9,42 @@ function AppHeader() {
                 <nav className={styles.nav}>
                     <ul className={styles.links}>
                         <li className='pl-5 pr-5 pb-4 pt-4'>
-                            <a className={styles.link} href="#">
-                                <BurgerIcon type='primary' />
-                                <p className='text text_type_main-default'>Конструктор</p>
-                            </a>
+                            <NavLink to={{ pathname: `/` }} className={styles.link}>
+                                {({ isActive }) => (
+                                    <>
+                                        <BurgerIcon type={isActive ? 'primary' : 'secondary'} />
+                                        <p className={isActive 
+                                            ? 'text text_type_main-default' 
+                                            : 'text text_type_main-default text_color_inactive'}>
+                                                Конструктор
+                                        </p>
+                                    </>
+                                )}
+                            </NavLink>
                         </li>
                         <li className='pl-5 pr-5 pb-4 pt-4'>
-                            <a className={styles.link} href="#">
+                            <NavLink to={{ pathname: `/` }} className={styles.link}>
                                 <ListIcon type='secondary'/>
                                 <p className='text text_type_main-default text_color_inactive'>Лента заказов</p>
-                            </a>
+                            </NavLink>
                         </li>
                     </ul>
                 </nav>
 
                 <Logo />
 
-                <a className={styles.profileLink} href='#'>
-                    <ProfileIcon type='secondary' />
-                    <p className='text text_type_main-default text_color_inactive'>Личный кабинет</p>
-                </a>
+                <NavLink to={{ pathname: `/profile` }} className={styles.link}>
+                {({ isActive }) => (
+                    <>
+                        <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
+                        <p className={isActive 
+                            ? 'text text_type_main-default' 
+                            : 'text text_type_main-default text_color_inactive'}>
+                            Личный кабинет
+                        </p>
+                    </>
+                )}
+            </NavLink>
             </div>
         </header>
     )

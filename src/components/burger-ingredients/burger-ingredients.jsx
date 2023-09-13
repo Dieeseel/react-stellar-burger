@@ -2,14 +2,11 @@ import React, { useMemo } from "react";
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientType from '../ingredients-type/ingredients-type'
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
-import { OPEN_INGREDIENT_DETAILS, CLOSE_INGREDIENT_DETAILS } from "../../services/actions/burger";
+import { OPEN_INGREDIENT_DETAILS } from "../../services/actions/burger";
 
 function BurgerIngredients() {
     const dispatch = useDispatch()
-    const ingredientDetails = useSelector(store => store.ingredientDetailsModalReducer)
     const { ingredients } = useSelector(store => store.ingredients)
     const [current, setCurrent] = React.useState('bun')
     
@@ -43,11 +40,6 @@ function BurgerIngredients() {
         })
     }
 
-    const closeIngredientModal = () => {
-        dispatch({ type: CLOSE_INGREDIENT_DETAILS })
-    }
-
-
     const buns = useMemo(() => ingredients.filter((item) => {
         return item.type === 'bun'
     }))
@@ -74,12 +66,6 @@ function BurgerIngredients() {
                 <IngredientType ref={sauceRef} type={sauces} name='Соусы' openIngredientModal={openIngredientModal}  />
                 <IngredientType ref={mainRef} type={main} name='Начинка' openIngredientModal={openIngredientModal}  />
             </ul>
-            {
-            ingredientDetails &&
-            <Modal closeModal={closeIngredientModal}>
-              <IngredientDetails data={ingredientDetails} closeModal={closeIngredientModal} />
-            </Modal>
-            }
         </section>
     )
 }
