@@ -8,7 +8,7 @@ import { changePassword } from '../services/actions/auth'
 
 export const ResetPasswordPage = () => {
     const dispatch = useDispatch()
-    const { isEmailValid } = useSelector(store => store.auth)
+    const isEmailValid = useSelector(store => store.auth.isEmailValid)
     const [form, setValue] = useState({ password: '', token: ''})
 
     const onChange = (e) => {
@@ -31,7 +31,7 @@ export const ResetPasswordPage = () => {
             <AppHeader />
             <div className={styles.wrapper}>
                 <div className={styles.container}>
-                    <form className={styles.form}>
+                    <form className={styles.form} onSubmit={change}>
                         <h1 className={`text text_type_main-medium ${styles.title}`}>Восстановление пароля</h1>
                         <div className={styles.inputs}>
                             <PasswordInput 
@@ -53,7 +53,6 @@ export const ResetPasswordPage = () => {
                                 type="primary" 
                                 size="medium"
                                 extraClass="mb-20"
-                                onClick={change}
                                 required >
                             Восстановить
                         </Button>

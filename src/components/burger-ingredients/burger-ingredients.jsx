@@ -7,7 +7,7 @@ import { OPEN_INGREDIENT_DETAILS } from "../../services/actions/burger";
 
 function BurgerIngredients() {
     const dispatch = useDispatch()
-    const { ingredients } = useSelector(store => store.ingredients)
+    const ingredients = useSelector(store => store.ingredients.ingredients)
     const [current, setCurrent] = React.useState('bun')
     
     const bunRef = React.useRef();

@@ -8,7 +8,7 @@ import { useState, useCallback } from 'react'
 
 export const ForgotPasswordPage = () => {
     const dispatch = useDispatch()
-    const { isEmailValid } = useSelector(store => store.auth)
+    const isEmailValid = useSelector(store => store.auth.isEmailValid)
     const [form, setValue] = useState({ email: ''})
 
     const onChange = (e) => {
@@ -32,7 +32,7 @@ export const ForgotPasswordPage = () => {
             <AppHeader />
             <div className={styles.wrapper}>
                 <div className={styles.container}>
-                    <form className={styles.form}>
+                    <form className={styles.form} onSubmit={reset}>
                         <h1 className={`text text_type_main-medium ${styles.title}`}>Восстановление пароля</h1>
                         <div className={styles.inputs}>
                             <EmailInput 
@@ -45,7 +45,6 @@ export const ForgotPasswordPage = () => {
                         <Button htmlType="submit" 
                                 type="primary" 
                                 size="medium"
-                                onClick={reset}
                                 extraClass="mb-20"
                                 required >
                             Восстановить

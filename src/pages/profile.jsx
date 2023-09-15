@@ -2,15 +2,16 @@ import styles from './profile.module.css'
 import AppHeader from '../components/app-header/app-header'
 import { NavLink } from 'react-router-dom'
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { signOut, saveNewData } from '../services/actions/auth'
 
 
 export const ProfilePage = () => {
     const dispatch = useDispatch()
-    const { userData } = useSelector(store => store.auth)
+    const userData = useSelector(store => store.auth.userData)
     const [form, setValue] = useState({name: userData.user.name, email: userData.user.email, password: ''})
+    const [activeButton, setActiveButton] = useState(false)
 
     const onChange = (e) => {
         setValue({ ...form, [e.target.name]: e.target.value })
@@ -29,6 +30,17 @@ export const ProfilePage = () => {
           dispatch(signOut())
         }, [form]
     );
+    
+    const resetChanges = () => {
+        setValue({name: userData.user.name, email: userData.user.email, password: ''})
+    }
+
+    useEffect(() => {
+        form.name ===  userData.user.name &&
+        form.email === userData.user.email &&  
+        form.password === '' ? setActiveButton(false) : setActiveButton(true)
+    }, [form])
+
 
     return (
         <div className={styles.app}>
@@ -47,7 +59,7 @@ export const ProfilePage = () => {
                     <NavLink className={`text text_type_main-medium text_color_inactive ${styles.inactivelink}`}>История заказов</NavLink>
                     <NavLink onClick={exit} className={`text text_type_main-medium text_color_inactive ${styles.inactivelink}`}>Выход</NavLink>
                 </div>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={saveChanges}>
                     <div className={styles.inputs}>
                         <Input 
                             placeholder="Имя" 
@@ -69,11 +81,16 @@ export const ProfilePage = () => {
                             value={form.password} 
                             minLength={6}
                             onChange={onChange} 
-                            required />
+                             />
                     </div>
-                    <Button htmlType="button" type="primary" size="medium" onClick={saveChanges}>
-                        Сохранить
-                    </Button>
+                    <div className={styles.buttons}>
+                        <Button htmlType="button" type="secondary" size="medium" onClick={resetChanges}>
+                            Отмена
+                        </Button>
+                        <Button htmlType="submit" type="primary" size="medium" disabled={!activeButton}>
+                            Сохранить
+                        </Button>
+                    </div>
                 </form>
             </main>
         </div>

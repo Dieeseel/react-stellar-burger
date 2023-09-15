@@ -1,14 +1,13 @@
 import AppHeader from "../components/app-header/app-header"
 import styles from './home.module.css'
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Link, Navigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useState, useCallback } from "react"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signUp } from "../services/actions/auth"
 
 export const RegistrationPage = () => {
     const dispatch = useDispatch()
-    const { userData } = useSelector(store => store.auth)
     const [form, setValue] = useState({name: '', email: '', password: ''})
 
     const onChange = (e) => {
@@ -22,16 +21,12 @@ export const RegistrationPage = () => {
         }, [form]
     );
     
-    if(userData) {
-        return <Navigate to='/' />
-    }
-
     return (
         <div className={styles.app}>
             <AppHeader />
             <div className={styles.wrapper}>
                 <div className={styles.container}>
-                    <form className={styles.form}>
+                    <form className={styles.form} onSubmit={register}>
                         <h1 className={`text text_type_main-medium ${styles.title}`}>Регистрация</h1>
                         <div className={styles.inputs}>
                             <Input 
@@ -60,7 +55,6 @@ export const RegistrationPage = () => {
                                 type="primary" 
                                 size="medium" 
                                 extraClass="mb-20"  
-                                onClick={register} 
                         >
                             Зарегистрироваться
                         </Button>

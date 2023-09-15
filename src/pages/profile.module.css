@@ -38,7 +38,7 @@
 .form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .inputs {
@@ -46,4 +46,8 @@
     flex-direction: column;
     gap: 24px;
     margin-bottom: 36px ;
+}
+
+.buttons {
+    display: flex;
 }

@@ -8,7 +8,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 function Ingredient ({ data, openIngredientModal }) {
     const location = useLocation();
-    const { burgerConstructor } = useSelector(store => store.burgerConstructor)
+    const burgerConstructor = useSelector(store => store.burgerConstructor.burgerConstructor)
     const counter = burgerConstructor.filter(item => item._id === data._id).length
     
     const [, dragRef] = useDrag({

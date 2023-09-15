@@ -2,13 +2,12 @@ import AppHeader from "../components/app-header/app-header"
 import styles from './home.module.css'
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState, useCallback } from "react"
-import { Link, Navigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
 import { signIn } from "../services/actions/auth"
 
 export const LoginPage = () => {
     const dispatch = useDispatch()
-    const { userData } = useSelector(store => store.auth)
     const [form, setValue] = useState({ email: '', password: '' })
 
     const onChange = (e) => {
@@ -22,18 +21,12 @@ export const LoginPage = () => {
         }, [form]
     );
 
-    if (userData) {
-        return (
-            <Navigate to={'/'} />
-        )
-    }
-
     return (
         <div className={styles.app}>
             <AppHeader />
             <div className={styles.wrapper}>
                 <div className={styles.container}>
-                    <form className={styles.form}>
+                    <form className={styles.form} onSubmit={login}>
                         <h1 className={`text text_type_main-medium ${styles.title}`}>Вход</h1>
                         <div className={styles.inputs}>
                             <EmailInput 
@@ -53,7 +46,6 @@ export const LoginPage = () => {
                                 type="primary" 
                                 size="medium" 
                                 extraClass="mb-20"
-                                onClick={login}
                                 required >
                             Войти
                         </Button>
