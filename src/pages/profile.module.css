@@ -1,0 +1,53 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #131316;
+    color: #f2f2f3;
+}
+
+.main {
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 120px;
+    width: 1240px;
+    gap: 60px;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+}
+
+.activeLink {
+    display: flex;
+    color: #f2f2f3;
+    text-decoration: none;
+    height: 64px;
+    align-items: center;
+}
+
+.inactivelink {
+    display: flex;
+    text-decoration: none;
+    height: 64px;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 36px ;
+}
+
+.buttons {
+    display: flex;
+}

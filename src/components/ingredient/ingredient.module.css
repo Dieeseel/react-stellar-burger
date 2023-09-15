@@ -17,3 +17,9 @@
     text-align: center;
 }
 
+.link {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+}
