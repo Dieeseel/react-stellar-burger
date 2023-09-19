@@ -13,9 +13,6 @@ export const GET_ORDER_FAILED = 'GET_ORDER_FAILED'
 
 export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL'
 
-export const OPEN_INGREDIENT_DETAILS = 'OPEN_INGREDIENT_DETAILS'
-export const CLOSE_INGREDIENT_DETAILS = 'CLOSE_INGREDIENT_DETAILS'
-
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT'
 
 
@@ -40,12 +37,12 @@ export const getIngredients = () => {
     }
 }
 
-export const sendOrder = (orderData) => {
+export const sendOrder = (orderData, token) => {
     return function(dispatch) {
         dispatch({
             type: GET_ORDER_REQUEST
         });
-        makeNewOrder(orderData).then(res => {
+        makeNewOrder(orderData, token).then(res => {
             dispatch({
                 type: GET_ORDER_SUCCESS,
                 order: res.order.number
@@ -59,3 +56,4 @@ export const sendOrder = (orderData) => {
         })
     }
 }
+

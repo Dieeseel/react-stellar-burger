@@ -3,13 +3,13 @@ import styles from './ingredients-type.module.css'
 import Ingredient from '../ingredient/ingredient'
 
 
-const IngredientType = React.forwardRef(({ type, name, openIngredientModal }, ref) => {
+const IngredientType = React.forwardRef(({ type, name }, ref) => {
     return (
         <li className='mb-10' ref={ref}>
             <h2 className='text text_type_main-medium'>{name}</h2>
             <ul className={styles.ingredients}>
                 {type.map((item) => {
-                    return <Ingredient data={item} key={item._id} openIngredientModal={openIngredientModal} />
+                    return <Ingredient data={item} key={item._id} />
                 })}
             </ul>
         </li>

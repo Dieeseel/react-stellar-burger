@@ -1,0 +1,41 @@
+.stats {
+    display: flex;
+    flex-direction: column;
+    min-width: 580px;
+    gap: 60px;
+}
+
+.board {
+    display: flex;
+    gap: 36px;
+}
+
+.status {
+    width: 272px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.numbers {
+    max-height: 290px;
+    list-style: none;
+    padding: 0 8px 0 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    overflow-y: auto;
+}
+
+.number {
+    color: #0CC;
+}
+
+.allDone {
+    display: flex;
+    flex-direction: column;
+}
+
+.digit {
+    text-shadow: 0px 4px 32px rgba(51, 51, 255, 0.50), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 0px 16px rgba(51, 51, 255, 0.25);
+}
