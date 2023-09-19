@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { getCookie } from '../../services/cookie';
 import { useEffect, useMemo } from "react";
 import { getIngredients } from '../../services/actions/burger';
-import { wsConnectionStart } from '../../services/actions/wsActions';
+import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/wsActions';
 import { useLocation } from 'react-router-dom';
 
 export const OrderDetails = ({ closeModal }) => {
@@ -22,6 +22,10 @@ export const OrderDetails = ({ closeModal }) => {
     useEffect(() => {
         dispatch(getIngredients())
         dispatch(wsConnectionStart(url))
+
+        return () => {
+            dispatch(wsConnectionClosed())
+        }
     }, [])
 
     const orderIngredients = useMemo(() => {
@@ -91,7 +95,6 @@ export const OrderDetails = ({ closeModal }) => {
             <div className={styles.inner}>
                 <p className='text text_type_main-default text_color_inactive'>
                     <FormattedDate date={new Date(order.createdAt)} />
-                    {` i-GMT-3`}
                 </p>
                 <p className={`text text_type_digits-default ${styles.price}`}>
                     {totalPrice} <CurrencyIcon type="primary" />

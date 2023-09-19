@@ -1,12 +1,12 @@
-import AppHeader from "../components/app-header/app-header"
+import AppHeader from "../../components/app-header/app-header"
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './orderDetailsPage.module.css'
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useMemo } from "react";
-import { wsConnectionStart } from "../services/actions/wsActions";
-import { getCookie } from "../services/cookie";
-import { getIngredients } from "../services/actions/burger";
+import { wsConnectionStart, wsConnectionClosed } from "../../services/actions/wsActions";
+import { getCookie } from "../../services/cookie";
+import { getIngredients } from "../../services/actions/burger";
 import { useLocation } from 'react-router-dom';
 
 export const OrderDetailsPage = () => {
@@ -23,6 +23,10 @@ export const OrderDetailsPage = () => {
     useEffect(() => {
         dispatch(getIngredients())
         dispatch(wsConnectionStart(url))
+
+        return () => {
+            dispatch(wsConnectionClosed())
+        }
     }, [])
 
     const orderIngredients = useMemo(() => {
@@ -93,7 +97,6 @@ export const OrderDetailsPage = () => {
                     <div className={styles.inner}>
                         <p className='text text_type_main-default text_color_inactive'>
                             <FormattedDate date={new Date(order.createdAt)} />
-                            {` i-GMT-3`}
                         </p>
                         <p className={`text text_type_digits-default ${styles.price}`}>
                             {totalPrice} <CurrencyIcon type="primary" />

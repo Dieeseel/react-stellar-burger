@@ -3,7 +3,7 @@ export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED';
 export const WS_GET_ORDERS = 'WS_GET_MESSAGE';
-
+export const WS_CONNECTION_DISCONNECT = 'WS_CONNECTION_DISCONNECT'
 
 export const wsConnectionStart = (url) => {
     return {
@@ -26,7 +26,7 @@ export const wsConnectionError = () => {
 
 export const wsConnectionClosed = () => {
     return {
-        type: WS_CONNECTION_CLOSED
+        type: WS_CONNECTION_DISCONNECT
     };
 };
 

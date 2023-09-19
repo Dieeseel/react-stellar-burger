@@ -1,10 +1,10 @@
 import styles from './profile.module.css'
-import AppHeader from '../components/app-header/app-header'
-import { ProfileNavigation } from '../components/profile-navigation/profile-navigation'
+import AppHeader from '../../components/app-header/app-header'
+import { ProfileNavigation } from '../../components/profile-navigation/profile-navigation'
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { signOut, saveNewData } from '../services/actions/auth'
+import { signOut, saveNewData } from '../../services/actions/auth'
 
 
 

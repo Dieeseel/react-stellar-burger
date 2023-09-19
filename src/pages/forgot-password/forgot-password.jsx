@@ -1,8 +1,8 @@
-import styles from './home.module.css'
-import AppHeader from '../components/app-header/app-header'
+import styles from '../home/home.module.css'
+import AppHeader from '../../components/app-header/app-header'
 import { Link, Navigate } from "react-router-dom"
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { resetPassword } from '../services/actions/auth'
+import { resetPassword } from '../../services/actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useCallback } from 'react'
 

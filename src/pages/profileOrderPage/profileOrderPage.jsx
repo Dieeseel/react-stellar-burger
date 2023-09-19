@@ -1,11 +1,11 @@
 import styles from './profileOrderPage.module.css'
-import AppHeader from '../components/app-header/app-header'
-import { ProfileNavigation } from '../components/profile-navigation/profile-navigation'
-import { ProfileOrders } from '../components/profile-orders/profile-orders'
+import AppHeader from '../../components/app-header/app-header'
+import { ProfileNavigation } from '../../components/profile-navigation/profile-navigation'
+import { ProfileOrders } from '../../components/profile-orders/profile-orders'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useMemo } from 'react'
-import { wsConnectionStart } from '../services/actions/wsActions'
-import { getCookie } from '../services/cookie'
+import { useEffect } from 'react'
+import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/wsActions'
+import { getCookie } from '../../services/cookie'
 
 
 export const ProfileOrderPage = () => {
@@ -16,6 +16,10 @@ export const ProfileOrderPage = () => {
 
     useEffect(() => {
         dispatch(wsConnectionStart(url))
+
+        return () => {
+            dispatch(wsConnectionClosed())
+        }
     }, [])
 
     return (

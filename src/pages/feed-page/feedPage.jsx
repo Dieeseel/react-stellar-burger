@@ -1,21 +1,26 @@
 import styles from './feedPage.module.css'
-import AppHeader from '../components/app-header/app-header'
+import AppHeader from '../../components/app-header/app-header'
 import { useDispatch, useSelector } from 'react-redux'
-import { wsConnectionStart, wsConnectionClosed } from '../services/actions/wsActions'
-import { useEffect, useMemo } from 'react'
-import { FeedOrders } from '../components/feed-orders/feed-orders'
-import { StatusDetails } from '../components/status-details/status-details'
+import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/wsActions'
+import { useEffect } from 'react'
+import { FeedOrders } from '../../components/feed-orders/feed-orders'
+import { StatusDetails } from '../../components/status-details/status-details'
 
 
 export const FeedPage = () => {
     const dispatch = useDispatch()
     const allOrders = useSelector(store => store.orders.ordersData)
+    const wsConnected = useSelector(store => store.orders.wsConnected)
     const url = 'wss://norma.nomoreparties.space/orders/all'
 
     useEffect(() => {
         dispatch(wsConnectionStart(url))
+
+        return () => {
+            dispatch(wsConnectionClosed())
+        }
     }, [])
-    
+
     return (
         <div className={styles.app}>
             <AppHeader />

@@ -25,7 +25,6 @@ export const FeedOrder = ({orderData, ingredientsData}) => {
                     <p className='text text_type_digits-default'>{`#${orderData.number}`}</p>
                     <p className='text text_type_main-default text_color_inactive'>
                         <FormattedDate date={new Date(orderData.createdAt)} />
-                        {` i-GMT-3`}
                     </p>
                 </div>
                 <h2 className={`text text_type_main-medium ${styles.name}`}>{orderData.name}</h2>

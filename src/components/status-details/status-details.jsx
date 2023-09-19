@@ -1,5 +1,5 @@
 import styles from './status-details.module.css'
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 
 export const StatusDetails = ({ ordersData }) => {
     const { doneOrders, createdOrders } = useMemo(() => {

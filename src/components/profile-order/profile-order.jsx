@@ -23,19 +23,6 @@ export const ProfileOrder = ({orderData, ingredientsData}) => {
         }
     }, [orderIngredients])
     
-    const counter = useMemo(() => {
-        if (orderData) {
-            return orderData.ingredients.reduce(function (prevVal, item) {
-                        if (!prevVal[item]) {
-                        prevVal[item] = 1;
-                    } else {
-                        prevVal[item] += 1;
-                    }
-                        return prevVal;
-            }, {})
-        }
-    }, [orderData])
-    
 
     return (
         <li>
@@ -44,7 +31,6 @@ export const ProfileOrder = ({orderData, ingredientsData}) => {
                     <p className='text text_type_digits-default'>{`#${orderData.number}`}</p>
                     <p className='text text_type_main-default text_color_inactive'>
                         <FormattedDate date={new Date(orderData.createdAt)} />
-                        {` i-GMT-3`}
                     </p>
                 </div>
                 <div className={styles.text}>

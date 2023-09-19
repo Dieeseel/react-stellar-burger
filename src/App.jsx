@@ -16,7 +16,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { checkAuth } from "./services/actions/auth"
 import Modal from "./components/modal/modal"
-import { IngredientDetailPage } from "./pages/ingredientDetailsPage"
+import { IngredientDetailPage } from "./pages/ingredient-details-page/ingredientDetailsPage"
 import IngredientDetails from "./components/ingredient-details/ingredient-details"
 import { OrderDetails } from "./components/order-details/order-details"
 
@@ -41,7 +41,7 @@ export const App = () => {
     return (
         <>
             <Routes location={background || location}>
-                <Route path="/" element={<OnlyAuth element={<HomePage />} />} />
+                <Route path="/" element={<HomePage />} />
                 <Route path="/sign-in" element={<OnlyUnAuth element={<LoginPage />} />} />
                 <Route path="/register" element={<OnlyUnAuth element={<RegistrationPage />} />} />
                 <Route path="/profile" element={<OnlyAuth element={<ProfilePage />} />} />

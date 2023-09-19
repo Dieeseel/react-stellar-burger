@@ -38,6 +38,7 @@ export const wsReducer = (state = initialState, action) => {
         }
         case WS_GET_ORDERS: {
             return {
+                ...state,
                 ordersData: action.payload
             }
         }
