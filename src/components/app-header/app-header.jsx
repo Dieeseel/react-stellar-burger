@@ -23,9 +23,17 @@ function AppHeader() {
                             </NavLink>
                         </li>
                         <li className='pl-5 pr-5 pb-4 pt-4'>
-                            <NavLink to={{ pathname: `/` }} className={styles.link}>
-                                <ListIcon type='secondary'/>
-                                <p className='text text_type_main-default text_color_inactive'>Лента заказов</p>
+                            <NavLink to={{ pathname: `/feed` }} className={styles.link}>
+                                {({ isActive }) => (
+                                    <>
+                                        <ListIcon type={isActive ? 'primary' : 'secondary'} />
+                                        <p className={isActive 
+                                            ? 'text text_type_main-default' 
+                                            : 'text text_type_main-default text_color_inactive'}>
+                                                Лента заказов
+                                        </p>
+                                    </>
+                                )}
                             </NavLink>
                         </li>
                     </ul>
@@ -33,7 +41,7 @@ function AppHeader() {
 
                 <Logo />
 
-                <NavLink to={{ pathname: `/profile` }} className={styles.link}>
+                <NavLink to={{ pathname: `/profile` }} className={styles.profileLink}>
                 {({ isActive }) => (
                     <>
                         <ProfileIcon type={isActive ? 'primary' : 'secondary'} />

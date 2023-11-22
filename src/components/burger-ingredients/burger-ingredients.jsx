@@ -1,6 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import { getIngredients } from "../../services/actions/burger";
 import IngredientType from '../ingredients-type/ingredients-type'
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_INGREDIENT_DETAILS } from "../../services/actions/burger";
@@ -9,7 +10,11 @@ function BurgerIngredients() {
     const dispatch = useDispatch()
     const ingredients = useSelector(store => store.ingredients.ingredients)
     const [current, setCurrent] = React.useState('bun')
-    
+
+    useEffect(() => {
+        dispatch(getIngredients())
+    }, [])
+
     const bunRef = React.useRef();
     const sauceRef = React.useRef();
     const mainRef = React.useRef();
@@ -33,23 +38,18 @@ function BurgerIngredients() {
         }
     }
 
-    const openIngredientModal = (ingredient) => {
-        dispatch({
-            type: OPEN_INGREDIENT_DETAILS,
-            details: ingredient
-        })
-    }
-
-    const buns = useMemo(() => ingredients.filter((item) => {
-        return item.type === 'bun'
-    }))
-    const sauces = useMemo(() => ingredients.filter((item) => {
-        return item.type === 'sauce'
-    }))
-    const main = useMemo(() => ingredients.filter((item) => {
-        return item.type === 'main'
-    }))
-
+    const { buns, sauces, main } = useMemo(() => {
+        const buns = ingredients.filter((item) => item.type === 'bun');
+        const sauces = ingredients.filter((item) => item.type === 'sauce');
+        const main = ingredients.filter((item) => item.type === 'main');
+      
+        return {
+          buns,
+          sauces,
+          main,
+        };
+      }, 
+    [ingredients]);
 
 
     return (
@@ -62,9 +62,9 @@ function BurgerIngredients() {
             </div>
                 
             <ul className={`custom-scroll ${styles.container}`} onScroll={handleChangeTab}>
-                <IngredientType ref={bunRef} type={buns} name='Булки' openIngredientModal={openIngredientModal} />
-                <IngredientType ref={sauceRef} type={sauces} name='Соусы' openIngredientModal={openIngredientModal}  />
-                <IngredientType ref={mainRef} type={main} name='Начинка' openIngredientModal={openIngredientModal}  />
+                <IngredientType ref={bunRef} type={buns} name='Булки'/>
+                <IngredientType ref={sauceRef} type={sauces} name='Соусы'/>
+                <IngredientType ref={mainRef} type={main} name='Начинка'/>
             </ul>
         </section>
     )

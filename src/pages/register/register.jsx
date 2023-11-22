@@ -1,10 +1,10 @@
-import AppHeader from "../components/app-header/app-header"
-import styles from './home.module.css'
+import AppHeader from "../../components/app-header/app-header"
+import styles from '../home/home.module.css'
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from "react-router-dom"
 import { useState, useCallback } from "react"
 import { useDispatch } from "react-redux";
-import { signUp } from "../services/actions/auth"
+import { signUp } from "../../services/actions/auth"
 
 export const RegistrationPage = () => {
     const dispatch = useDispatch()

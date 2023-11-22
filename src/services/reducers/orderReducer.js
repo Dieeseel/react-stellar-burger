@@ -25,7 +25,6 @@ export const orderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 orderNumber: action.order,
-                orderRequest: false
             }
         }
         case GET_ORDER_FAILED: {
@@ -38,6 +37,7 @@ export const orderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 orderNumber: null,
+                orderRequest: false
             }
         }
         default: {

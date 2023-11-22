@@ -1,10 +1,10 @@
-import styles from './home.module.css'
-import AppHeader from '../components/app-header/app-header'
+import styles from '../home/home.module.css'
+import AppHeader from '../../components/app-header/app-header'
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, Navigate } from "react-router-dom"
 import { useState, useCallback } from 'react'
-import { changePassword } from '../services/actions/auth'
+import { changePassword } from '../../services/actions/auth'
 
 export const ResetPasswordPage = () => {
     const dispatch = useDispatch()

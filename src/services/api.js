@@ -12,11 +12,12 @@ export const getIngredientsRequest = async () => {
 }
 
 
-export const makeNewOrder = async (data) => {
+export const makeNewOrder = (data, token) => {
     return fetch(`${urlApi}/orders`, {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'authorization': 'Bearer ' + token
         },
         body: JSON.stringify({
             ingredients: data
@@ -55,7 +56,7 @@ export const getUserRequest = async (accessToken) => {
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + accessToken
+          'authorization': 'Bearer ' + accessToken
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer'

@@ -1,7 +1,8 @@
 import {
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
-    MOVE_INGREDIENT
+    MOVE_INGREDIENT,
+    CLOSE_ORDER_MODAL
 } from '../actions/burger'
 
 
@@ -42,6 +43,13 @@ export const constructorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 burgerConstructor: [...buns, ...newMainIngredientsArray]
+            }
+        }
+        case CLOSE_ORDER_MODAL: {
+            return {
+                ...state,
+                burgerConstructor: [],
+                totalPrice: 0
             }
         }
         default: {

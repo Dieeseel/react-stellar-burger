@@ -1,0 +1,15 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #131316;
+    color: #f2f2f3;
+}
+
+.main {
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    width: 1240px;
+    gap: 48px;
+}
