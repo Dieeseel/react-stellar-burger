@@ -1,11 +1,11 @@
 import styles from './profile-order.module.css'
-import { useMemo } from 'react'
+import { useMemo, FC } from 'react'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation } from 'react-router-dom'
 import { TIngredient } from '../../services/types/data'
 import { IOrderElement } from '../../services/types/data'
 
-export const ProfileOrder = ({orderData, ingredientsData}: IOrderElement) => {
+export const ProfileOrder: FC<IOrderElement> = ({orderData, ingredientsData}) => {
     const location = useLocation()
     const ingredientsId = orderData.ingredients
 

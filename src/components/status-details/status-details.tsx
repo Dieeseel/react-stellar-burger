@@ -1,8 +1,8 @@
 import styles from './status-details.module.css'
-import { useMemo } from "react";
+import { useMemo, FC } from "react";
 import { IStatusDetails } from '../../services/types/data';
 
-export const StatusDetails = ({ ordersData }: IStatusDetails) => {
+export const StatusDetails: FC<IStatusDetails> = ({ ordersData }) => {
     const { doneOrders, createdOrders } = useMemo(() => {
         const doneOrders = ordersData.orders.filter(item => item.status === 'done')
         const createdOrders = ordersData.orders.filter(item => item.status === 'created')

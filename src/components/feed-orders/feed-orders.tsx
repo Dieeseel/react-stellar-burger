@@ -1,11 +1,11 @@
 import styles from './feed-orders.module.css'
-import { useEffect } from 'react'
+import { useEffect, FC } from 'react'
 import { useDispatch, useSelector } from '../../services/hooks'
 import { FeedOrder } from '../feed-order/feed-order'
 import { getIngredients } from '../../services/actions/ingredients'
 import { IFeedOrders } from '../../services/types/data'
 
-export const FeedOrders = ({ ordersData }: IFeedOrders) => {
+export const FeedOrders: FC<IFeedOrders> = ({ ordersData }) => {
     const dispatch = useDispatch()
     const ingredientsData = useSelector(store => store.ingredients.ingredients)
 

@@ -1,3 +1,4 @@
+import { FC }  from "react";
 import styles from './order-modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import doneIcon from '../../images/done.png';
@@ -5,7 +6,7 @@ import PropTypes from "prop-types";
 import { IOrderModal } from '../../services/types/data';
 
 
-function OrderModal({orderNumber, closeModal}: IOrderModal) {
+const OrderModal: FC<IOrderModal> = ({orderNumber, closeModal}) => {
     return (
         <div className={`pl-10 pr-10 pb-30 pt-15 ${styles.container}`}>
             <button className={styles.button} onClick={closeModal}><CloseIcon type="primary" /></button>

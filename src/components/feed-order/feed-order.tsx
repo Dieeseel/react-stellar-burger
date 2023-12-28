@@ -1,10 +1,10 @@
 import styles from './feed-order.module.css'
-import {useMemo} from 'react'
+import {useMemo, FC} from 'react'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation } from 'react-router-dom'
 import { IOrderElement } from '../../services/types/data'
 
-export const FeedOrder = ({orderData, ingredientsData}: IOrderElement) => {
+export const FeedOrder: FC<IOrderElement> = ({orderData, ingredientsData}) => {
     const ingredientsId = orderData.ingredients
     const location = useLocation()
 

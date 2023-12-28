@@ -2,7 +2,7 @@ import { urlApi } from "../utils/data";
 import { setCookie } from "./cookie";
 import { TSignInData, TLoginData, TChangePasswordData } from "./types/data";
 
-const checkReponses = (res: any) => {
+const checkReponses = (res: Response) => {
   return res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err));
 };
 
@@ -24,7 +24,7 @@ export const makeNewOrder = (data: string[], token: string | undefined) => {
             ingredients: data
         })
     })
-        .then(res => checkReponses(res))
+        .then(checkReponses)
 }
 
 export const signUpRequest = (data: TSignInData) => {
@@ -35,7 +35,7 @@ export const signUpRequest = (data: TSignInData) => {
       },
       body: JSON.stringify(data)
   })
-      .then(res => checkReponses(res))
+      .then(checkReponses)
 }
 
 export const loginRequest = async (userData: TLoginData) => {
@@ -46,7 +46,7 @@ export const loginRequest = async (userData: TLoginData) => {
         },
         body: JSON.stringify(userData)
     })  
-        .then(res => checkReponses(res))
+        .then(checkReponses)
 }
 
 export const getUserRequest = async (accessToken: string | undefined) => {
@@ -62,7 +62,7 @@ export const getUserRequest = async (accessToken: string | undefined) => {
         redirect: 'follow',
         referrerPolicy: 'no-referrer'
       })
-      .then(res => checkReponses(res)) 
+      .then(checkReponses) 
 }
 
 export const refreshTokenRequest = async (refreshToken: string | undefined) => {
@@ -75,7 +75,7 @@ export const refreshTokenRequest = async (refreshToken: string | undefined) => {
         token: refreshToken
       }),
     })
-    .then(res => checkReponses(res))
+    .then(checkReponses)
 };
 
 export const fetchWithRefresh = async (accessToken: string | undefined, refreshToken: string | undefined) => {
@@ -111,7 +111,7 @@ export const signOutRequest = (refreshToken: string | undefined) => {
         token: refreshToken
       }),
     })
-    .then(res => checkReponses(res));
+    .then(checkReponses);
 }
 
 
@@ -129,7 +129,7 @@ export const patchUserDataRequest = async (data: TSignInData, cookie: string | u
       redirect: 'follow',
       referrerPolicy: 'no-referrer'
   })
-      .then(res => checkReponses(res)); 
+      .then(checkReponses); 
 }
 
 export const resetPasswordRequest = (email: {email: string}) => {
@@ -140,7 +140,7 @@ export const resetPasswordRequest = (email: {email: string}) => {
           },
           body: JSON.stringify(email),
     })
-    .then(res => checkReponses(res));
+    .then(checkReponses);
 }
 
 export const changePasswordRequest = (data: TChangePasswordData) => {
@@ -151,5 +151,5 @@ export const changePasswordRequest = (data: TChangePasswordData) => {
         },
         body: JSON.stringify(data),
     })
-    .then(res => checkReponses(res));
+    .then(checkReponses);
 }

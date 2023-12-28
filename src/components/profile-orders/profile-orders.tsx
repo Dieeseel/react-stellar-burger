@@ -1,11 +1,11 @@
 import styles from './profile-orders.module.css'
-import { useEffect } from 'react'
+import { useEffect, FC } from 'react'
 import { useDispatch, useSelector } from '../../services/hooks'
 import { ProfileOrder } from '../profile-order/profile-order'
 import { getIngredients } from '../../services/actions/ingredients'
 import { IProfileDetails } from '../../services/types/data'
 
-export const ProfileOrders = ({ ordersData }: IProfileDetails) => {
+export const ProfileOrders: FC<IProfileDetails> = ({ ordersData }) => {
     const dispatch = useDispatch()
     const ingredientsData = useSelector(store => store.ingredients.ingredients)
 

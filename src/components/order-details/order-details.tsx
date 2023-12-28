@@ -1,4 +1,4 @@
-import { FunctionComponent }  from "react";
+import { FC }  from "react";
 import styles from './order-details.module.css'
 import { CloseIcon, CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from "../../services/hooks";
@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom';
 import { ICloseModalProps } from '../../services/types/data';
 
 
-export const OrderDetails = ({ closeModal }: ICloseModalProps) => {
+export const OrderDetails: FC<ICloseModalProps> = ({ closeModal }) => {
     const dispatch = useDispatch()
     const location = useLocation()
     const { id } = useParams();

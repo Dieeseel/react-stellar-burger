@@ -1,7 +1,6 @@
-import React, {FunctionComponent} from 'react'
+import React, {FC} from 'react'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './constructor-item.module.css'
-import { ingredientPropType } from '../../utils/prop-types'
 import { useDispatch } from 'react-redux';
 import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../services/constants/constatnts';
 import { useDrag, useDrop } from "react-dnd";
@@ -9,7 +8,7 @@ import { IConstructorItem } from '../../services/types/data';
 import { moveIngredientAction } from '../../services/actions/constructor';
 import { TIngredient } from '../../services/types/data';
 
-const ConstructorItem: FunctionComponent<IConstructorItem> = ({ ingredient, index }) => {
+const ConstructorItem: FC<IConstructorItem> = ({ ingredient, index }) => {
     const dispatch = useDispatch()
     const ref = React.useRef(null);
     const removeItem = () => {
@@ -30,7 +29,7 @@ const ConstructorItem: FunctionComponent<IConstructorItem> = ({ ingredient, inde
         item: {index}
     });
 
-    const [{isHover}, dropTarget] = useDrop({
+    const [{}, dropTarget] = useDrop({
         accept: "ingredient",
         drop: (item: TIngredient & {index: number}) => {
             const dragIndex = item.index;

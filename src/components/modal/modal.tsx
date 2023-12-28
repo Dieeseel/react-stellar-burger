@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FC} from "react";
 import ReactDOM from "react-dom";
 import styles from './modal.module.css'
 import ModalOverlay from "../modal-overlay/modal-overlay";
@@ -6,7 +6,7 @@ import { ICloseModalProps } from '../../services/types/data';
 
 const modalRoot = document.getElementById("react-modals");
 
-const Modal: FunctionComponent<ICloseModalProps> = ({ children, closeModal }) => {
+const Modal: FC<ICloseModalProps> = ({ children, closeModal }) => {
 
     React.useEffect(() => {
         document.addEventListener("keydown", (evt) => {

@@ -1,10 +1,11 @@
+import { FC } from "react";
 import { useSelector } from '../services/hooks';
 import { Navigate, useLocation } from 'react-router-dom';
 import { IProtectedRoute } from '../services/types/data';
 import { IOnlyAuthElement } from '../services/types/data';
 
 
-export const ProtectedRouteElement = ({ onlyUnAuth = false, element }: IProtectedRoute) => {
+export const ProtectedRouteElement: FC<IProtectedRoute> = ({ onlyUnAuth = false, element }) => {
     const location = useLocation();
     const { userData, isCheckedAuth } = useSelector(store => store.auth)
 

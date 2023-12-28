@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import styles from './ingredient-details.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from '../../services/hooks'
@@ -6,7 +7,7 @@ import { getIngredients } from '../../services/actions/ingredients'
 import { useEffect } from "react";
 import { ICloseModalProps } from '../../services/types/data'
 
-function IngredientDetails({closeModal}: ICloseModalProps ) {
+const IngredientDetails: FC<ICloseModalProps> = ({closeModal}) => {
     const dispatch = useDispatch()
     const { ingredients } = useSelector(store => store.ingredients)
     const { id } = useParams();

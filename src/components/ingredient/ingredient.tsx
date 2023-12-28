@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FC } from 'react';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './ingredient.module.css'
 import { useSelector } from '../../services/hooks';
@@ -7,7 +7,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { IIngredients } from '../../services/types/data';
 
 
-const Ingredient: FunctionComponent<IIngredients> = ({ data }) => {
+const Ingredient: FC<IIngredients> = ({ data }) => {
     const location = useLocation();
     const burgerConstructor = useSelector(store => store.burgerConstructor.burgerConstructor)
     const counter = burgerConstructor.filter(item => item._id === data._id).length
